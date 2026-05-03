@@ -363,6 +363,56 @@
   }
   .tricolor-bottom div { flex: 1; }
 
+  /* COUNTDOWN */
+  .countdown-wrapper {
+    margin-top: 30px;
+    text-align: center;
+  }
+  .countdown-label {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+  .countdown {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .countdown-item {
+    background: rgba(255,215,0,0.08);
+    border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    min-width: 70px;
+    text-align: center;
+  }
+  .countdown-item span {
+    display: block;
+    font-family: 'Black Ops One', cursive;
+    font-size: 2rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .countdown-item small {
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 2px;
+  }
+  .countdown-sep {
+    font-family: 'Black Ops One', cursive;
+    font-size: 2rem;
+    color: var(--gold);
+    opacity: 0.5;
+  }
+  .countdown-date {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 1px;
+  }
+
   /* DIVIDER */
   .divider {
     width: 100%;
@@ -400,6 +450,33 @@
   </div>
 
   <p class="contract">CONTRACT : COMING SOON</p>
+
+  <div class="countdown-wrapper">
+    <p class="countdown-label">🚀 LAUNCH IN</p>
+    <div class="countdown">
+      <div class="countdown-item">
+        <span id="days">00</span>
+        <small>DAYS</small>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-item">
+        <span id="hours">00</span>
+        <small>HRS</small>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-item">
+        <span id="minutes">00</span>
+        <small>MIN</small>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-item">
+        <span id="seconds">00</span>
+        <small>SEC</small>
+      </div>
+    </div>
+    <p class="countdown-date">June 7, 2026 — $BAGUETTE Launch 🥖🇫🇷</p>
+  </div>
+
 </div>
 
 <div class="divider"></div>
@@ -630,7 +707,27 @@
 <div class="tricolor-bottom"><div class="bl" style="background:#002395"></div><div class="wh" style="background:#FFFFFF"></div><div class="rd" style="background:#ED2939"></div></div>
 
 <script>
-  // Generate stars
+  // Countdown timer
+  function updateCountdown() {
+    const launch = new Date('2026-06-07T00:00:00').getTime();
+    const now = new Date().getTime();
+    const diff = launch - now;
+    if (diff > 0) {
+      document.getElementById('days').textContent = String(Math.floor(diff / (1000*60*60*24))).padStart(2,'0');
+      document.getElementById('hours').textContent = String(Math.floor((diff%(1000*60*60*24))/(1000*60*60))).padStart(2,'0');
+      document.getElementById('minutes').textContent = String(Math.floor((diff%(1000*60*60))/(1000*60))).padStart(2,'0');
+      document.getElementById('seconds').textContent = String(Math.floor((diff%(1000*60))/1000)).padStart(2,'0');
+    } else {
+      document.getElementById('days').textContent = '00';
+      document.getElementById('hours').textContent = '00';
+      document.getElementById('minutes').textContent = '00';
+      document.getElementById('seconds').textContent = '00';
+    }
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+
   const starsEl = document.getElementById('stars');
   for (let i = 0; i < 120; i++) {
     const star = document.createElement('div');
